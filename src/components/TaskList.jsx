@@ -7,11 +7,17 @@ export default function TaskList() {
   const [taskStorage, setTaskStorage] = useState([]);
   const [title, setTitle] = useState("");
 
+  function deleteTask(id) {
+    setTaskStorage((prev) => prev.filter((task) => task.id !== id));
+    console.log(taskStorage);
+  }
+
   function handleTitleOnChange(event) {
     setTitle(event.target.value);
   }
 
   function handleInputOnSave() {
+    if (title === "") return;
     const id = uuidv4();
     setTaskStorage([...taskStorage, { id: id, taskTitle: title }]);
     setTitle("");
@@ -32,7 +38,14 @@ export default function TaskList() {
       </div>
       <ul className={taskStyles.taskList}>
         {taskStorage.map((task) => {
-          return <Task key={task.id} title={task.taskTitle} />;
+          return (
+            <Task
+              key={task.id}
+              id={task.id}
+              title={task.taskTitle}
+              deleteTask={deleteTask}
+            />
+          );
         })}
       </ul>
     </div>
