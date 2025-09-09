@@ -7,6 +7,14 @@ export default function TaskList() {
   const [taskStorage, setTaskStorage] = useState([]);
   const [title, setTitle] = useState("");
 
+  function updateTask(id, title) {
+    const updatedTaskStorage = taskStorage.map((task) => {
+      return task.id === id ? { ...task, taskTitle: title } : task;
+    });
+
+    setTaskStorage(updatedTaskStorage);
+  }
+
   function deleteTask(id) {
     setTaskStorage((prev) => prev.filter((task) => task.id !== id));
     console.log(taskStorage);
@@ -44,6 +52,7 @@ export default function TaskList() {
               id={task.id}
               title={task.taskTitle}
               deleteTask={deleteTask}
+              updateTask={updateTask}
             />
           );
         })}
